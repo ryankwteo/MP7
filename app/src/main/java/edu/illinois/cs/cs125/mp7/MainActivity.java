@@ -17,4 +17,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MealActivity.class);
         startActivity(intent);
     }
+
+    public void openCocktails(View view) {
+        Intent intent = new Intent(this, CocktailActivity.class);
+        startActivity(intent);
+    }
 }
