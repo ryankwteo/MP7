@@ -19,6 +19,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SearchActivity"
+            android:label="Search" />
+        <activity
             android:name=".MealActivity"
             android:label="Meals" />
         <activity
