@@ -8,15 +8,22 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity{
 
@@ -24,12 +31,18 @@ public class SearchActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        requestQueue = Volley.newRequestQueue(this);
+
     }
 
     static String json;
+    static String test = "test";
     static String jsonToParse;
+    String nameToSearch;
+    String TAG = "MP777";
 
-    public void searchByName(View view) {
+    public void searchName(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
         builder.setTitle("Cocktail Name Search");
@@ -40,7 +53,7 @@ public class SearchActivity extends AppCompatActivity{
             @Override
             public void onClick(final DialogInterface dialog, final int unused) {
 
-                String nameToSearch = input.getText().toString().trim().toLowerCase();
+                nameToSearch = input.getText().toString().trim().toLowerCase();
                 startAPICall();
                 Intent toCocktailActivity = new Intent(SearchActivity.this,
                         CocktailActivity.class);
@@ -60,24 +73,34 @@ public class SearchActivity extends AppCompatActivity{
     }
 
     private static RequestQueue requestQueue;
+    String url = "http://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + nameToSearch;
 
     void startAPICall() {
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita",
+                    url,
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(final JSONObject response) {
                             json = response.toString();
+                            Log.d(TAG, "json contains response string");
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(final VolleyError error) {
 
                 }
-            });
+            }) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("APIKey", "1");
+                    Log.d(TAG, params.toString());
+                    return params;
+                }
+            };
             requestQueue.add(jsonObjectRequest);
         } catch (Exception e) {
             e.printStackTrace();
