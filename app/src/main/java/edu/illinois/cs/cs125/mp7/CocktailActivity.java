@@ -41,9 +41,8 @@ public class CocktailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String json = intent.getStringExtra(SearchActivity.jsonToParse);
         if (json != null) {
-            final String instructions = getInstructions(json);
             final TextView textView = findViewById(R.id.instructionsCocktail);
-            textView.setText(instructions);
+            textView.setText(json);
         }
     }
 }

@@ -19,6 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONObject;
 
@@ -37,10 +40,12 @@ public class SearchActivity extends AppCompatActivity{
     }
 
     static String json;
+    static String instructions;
     static String test = "test";
     static String jsonToParse;
     String nameToSearch;
     String TAG = "MP777";
+    private static RequestQueue requestQueue;
 
     public void searchName(View view) {
 
@@ -54,10 +59,10 @@ public class SearchActivity extends AppCompatActivity{
             public void onClick(final DialogInterface dialog, final int unused) {
 
                 nameToSearch = input.getText().toString().trim().toLowerCase();
-                APICall();
+                instructions = APICall(nameToSearch);
                 Intent toCocktailActivity = new Intent(SearchActivity.this,
                         CocktailActivity.class);
-                toCocktailActivity.putExtra(jsonToParse, json);
+                toCocktailActivity.putExtra(jsonToParse, instructions);
                 startActivity(toCocktailActivity);
             }
         });
@@ -72,20 +77,19 @@ public class SearchActivity extends AppCompatActivity{
         builder.show();
     }
 
-    private static RequestQueue requestQueue;
-    String url = "http://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + nameToSearch;
-
-    void APICall() {
+    public String APICall(final String search) {
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    url,
+                    "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + search,
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(final JSONObject response) {
                             json = response.toString();
+                            instructions = getInstructions(json);
                             Log.d(TAG, "json contains response string");
+                            Log.d(TAG, json);
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -97,7 +101,18 @@ public class SearchActivity extends AppCompatActivity{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return instructions;
     }
 
+    public static String getInstructions(final String json) {
+        if (json == null) {
+            return null;
+        } else {
+            JsonParser parser = new JsonParser();
+            JsonArray drinks = parser.parse(json).getAsJsonArray();
+            JsonObject drink = drinks.get(0).getAsJsonObject();
+
+            return drink.get("strInstructions").getAsString();
+        }
+    }
 }
