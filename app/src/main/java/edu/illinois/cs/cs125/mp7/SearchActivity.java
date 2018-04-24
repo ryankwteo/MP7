@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity{
             public void onClick(final DialogInterface dialog, final int unused) {
 
                 nameToSearch = input.getText().toString().trim().toLowerCase();
-                startAPICall();
+                APICall();
                 Intent toCocktailActivity = new Intent(SearchActivity.this,
                         CocktailActivity.class);
                 toCocktailActivity.putExtra(jsonToParse, json);
@@ -75,7 +75,7 @@ public class SearchActivity extends AppCompatActivity{
     private static RequestQueue requestQueue;
     String url = "http://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + nameToSearch;
 
-    void startAPICall() {
+    void APICall() {
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
@@ -90,17 +90,9 @@ public class SearchActivity extends AppCompatActivity{
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(final VolleyError error) {
-
+                    Log.d(TAG, "error obtaining json");
                 }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("APIKey", "1");
-                    Log.d(TAG, params.toString());
-                    return params;
-                }
-            };
+            });
             requestQueue.add(jsonObjectRequest);
         } catch (Exception e) {
             e.printStackTrace();
