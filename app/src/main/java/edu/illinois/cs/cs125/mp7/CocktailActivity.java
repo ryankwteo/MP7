@@ -17,7 +17,7 @@ public class CocktailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cocktail);
 
-        makeCall();
+        makeIntentCall();
     }
 
     public void openSearch(View view) {
@@ -38,7 +38,7 @@ public class CocktailActivity extends AppCompatActivity {
         }
     }
 
-    public void makeCall() {
+    public void makeIntentCall() {
         Intent intent = getIntent();
         String json = intent.getStringExtra(SearchActivity.jsonToParse);
         if (json != null) {

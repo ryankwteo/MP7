@@ -48,8 +48,6 @@ public class SearchActivity extends AppCompatActivity{
 
     public void searchName(View view) {
 
-        String instructions;
-
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
         builder.setTitle("Cocktail Name Search");
         final EditText input = new EditText(SearchActivity.this);
@@ -58,7 +56,6 @@ public class SearchActivity extends AppCompatActivity{
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, final int unused) {
-
                 nameToSearch = input.getText().toString().trim().toLowerCase();
                 APICall(nameToSearch);
             }
