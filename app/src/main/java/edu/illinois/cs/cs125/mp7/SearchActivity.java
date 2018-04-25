@@ -40,7 +40,6 @@ public class SearchActivity extends AppCompatActivity{
     }
 
     static String json;
-    static String instructions;
     static String test = "test";
     static String jsonToParse;
     String nameToSearch;
@@ -48,6 +47,8 @@ public class SearchActivity extends AppCompatActivity{
     private static RequestQueue requestQueue;
 
     public void searchName(View view) {
+
+        String instructions;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
         builder.setTitle("Cocktail Name Search");
@@ -59,11 +60,7 @@ public class SearchActivity extends AppCompatActivity{
             public void onClick(final DialogInterface dialog, final int unused) {
 
                 nameToSearch = input.getText().toString().trim().toLowerCase();
-                instructions = APICall(nameToSearch);
-                Intent toCocktailActivity = new Intent(SearchActivity.this,
-                        CocktailActivity.class);
-                toCocktailActivity.putExtra(jsonToParse, instructions);
-                startActivity(toCocktailActivity);
+                APICall(nameToSearch);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -77,7 +74,8 @@ public class SearchActivity extends AppCompatActivity{
         builder.show();
     }
 
-    public String APICall(final String search) {
+
+    public void APICall(final String search) {
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
@@ -87,9 +85,10 @@ public class SearchActivity extends AppCompatActivity{
                         @Override
                         public void onResponse(final JSONObject response) {
                             json = response.toString();
-                            instructions = getInstructions(json);
-                            Log.d(TAG, "json contains response string");
-                            Log.d(TAG, json);
+                            Intent toCocktailActivity = new Intent(SearchActivity.this,
+                                    CocktailActivity.class);
+                            toCocktailActivity.putExtra(jsonToParse, json);
+                            startActivity(toCocktailActivity);
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -100,19 +99,6 @@ public class SearchActivity extends AppCompatActivity{
             requestQueue.add(jsonObjectRequest);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        return instructions;
-    }
-
-    public static String getInstructions(final String json) {
-        if (json == null) {
-            return null;
-        } else {
-            JsonParser parser = new JsonParser();
-            JsonArray drinks = parser.parse(json).getAsJsonArray();
-            JsonObject drink = drinks.get(0).getAsJsonObject();
-
-            return drink.get("strInstructions").getAsString();
         }
     }
 }

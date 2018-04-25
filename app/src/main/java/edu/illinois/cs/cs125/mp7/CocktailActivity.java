@@ -30,8 +30,9 @@ public class CocktailActivity extends AppCompatActivity {
             return null;
         } else {
             JsonParser parser = new JsonParser();
-            JsonArray drinks = parser.parse(json).getAsJsonArray();
-            JsonObject drink = drinks.get(0).getAsJsonObject();
+            JsonObject drinks = parser.parse(json).getAsJsonObject();
+            JsonArray typeOfDrinks = drinks.get("drinks").getAsJsonArray();
+            JsonObject drink = typeOfDrinks.get(0).getAsJsonObject();
 
             return drink.get("strInstructions").getAsString();
         }
@@ -41,8 +42,9 @@ public class CocktailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String json = intent.getStringExtra(SearchActivity.jsonToParse);
         if (json != null) {
+            String instructions = getInstructions(json);
             final TextView textView = findViewById(R.id.instructionsCocktail);
-            textView.setText(json);
+            textView.setText(instructions);
         }
     }
 }
