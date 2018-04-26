@@ -32,8 +32,8 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="386dp"
-        android:layout_height="104dp"
+        android:layout_width="316dp"
+        android:layout_height="72dp"
         android:text="Ingredient : "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,13 +44,13 @@
 
     <TextView
         android:id="@+id/instructionsCocktail"
-        android:layout_width="380dp"
-        android:layout_height="164dp"
+        android:layout_width="318dp"
+        android:layout_height="146dp"
         android:text="Instruction : "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
