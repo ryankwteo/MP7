@@ -166,10 +166,8 @@ public class SearchActivity extends AppCompatActivity{
                             json = response.toString();
                             Intent toCocktailActivity = new Intent(SearchActivity.this,
                                     CocktailActivity.class);
-                            Bundle jsonDetails = new Bundle();
-                            jsonDetails.putString(jsonToParse, json);
-                            jsonDetails.putInt(typeOfSearch, searchType);
-                            toCocktailActivity.putExtras(jsonDetails);
+                            toCocktailActivity.putExtra(jsonToParse, new String[] {json,
+                                    Integer.toString(searchType)});
                             startActivity(toCocktailActivity);
                         }
                     }, new Response.ErrorListener() {
@@ -183,5 +181,5 @@ public class SearchActivity extends AppCompatActivity{
             e.printStackTrace();
         }
     }
-    
+
 }

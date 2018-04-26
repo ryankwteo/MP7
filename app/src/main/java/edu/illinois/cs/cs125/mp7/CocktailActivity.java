@@ -91,12 +91,16 @@ public class CocktailActivity extends AppCompatActivity {
     String TAG = "MP777";
 
     public void makeIntentCall() {
+        String[] searchData;
+        String json;
+        int typeOfSearch;
         Intent intent = getIntent();
-        Bundle jsonDetails = intent.getExtras();
-        String json = jsonDetails.getString(SearchActivity.jsonToParse);
-        int typeOfSearch = jsonDetails.getInt(SearchActivity.typeOfSearch, 0);
+        searchData = intent.getStringArrayExtra(SearchActivity.jsonToParse);
+        json = searchData[0];
+        typeOfSearch = Integer.parseInt(searchData[1]);
+        Log.d(TAG, searchData[1]);
         Log.d(TAG, Integer.toString(typeOfSearch));
-        Log.d(TAG, json);
+        Log.d(TAG,json);
         if (json != null) {
             Log.d(TAG, "json is not null");
             if (typeOfSearch == 1 || typeOfSearch == 3) {
