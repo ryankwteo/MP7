@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -64,7 +65,8 @@ public class CocktailActivity extends AppCompatActivity {
           if (drink.get("strIngredient" + i).getAsString().equals("")) {
             Ingredient = Ingredient + "";
           } else {
-            Ingredient = Ingredient + drink.get("strIngredient" + i).getAsString() + "(" + drink.get("strMeasure" + i).getAsString() + ")" +"  ";
+            Ingredient = Ingredient + drink.get("strIngredient" + i).getAsString() +
+                    " (" + drink.get("strMeasure" + i).getAsString() + ")" + "\n";
           }
         }
       }
@@ -83,6 +85,8 @@ public class CocktailActivity extends AppCompatActivity {
         }
     }
 
+    String TAG = "MP777";
+
     public void makeIntentCall() {
         Intent intent = getIntent();
         String json = intent.getStringExtra(SearchActivity.jsonToParse);
@@ -90,11 +94,13 @@ public class CocktailActivity extends AppCompatActivity {
             String instructions = getInstructions(json);
             String ingredients = getIngredients(json);
             String imageURL = getPicture(json);
+            Log.d(TAG, imageURL);
             final TextView textView = findViewById(R.id.instructionsCocktail);
-            textView.setText("Instruction : " + instructions);
+            textView.setText("Instructions :\n" + instructions);
             final TextView textView1 = findViewById(R.id.textView3);
-            textView1.setText("Ingredients : " + ingredients);
+            textView1.setText("Ingredients :\n" + ingredients);
             final ImageView imageView = findViewById(R.id.imageView3);
+            Picasso.with(this).load(imageURL).into(imageView);
         }
     }
 }

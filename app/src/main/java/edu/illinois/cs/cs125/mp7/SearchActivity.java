@@ -40,7 +40,6 @@ public class SearchActivity extends AppCompatActivity{
     }
 
     static String json;
-    static String test = "test";
     static String jsonToParse;
     String nameToSearch;
     String TAG = "MP777";

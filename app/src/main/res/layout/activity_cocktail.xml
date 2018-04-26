@@ -8,15 +8,15 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="186dp"
-        android:layout_height="140dp"
+        android:layout_width="230dp"
+        android:layout_height="183dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.206"
-        app:srcCompat="@drawable/wpxpvu1439905379" />
+        app:layout_constraintVertical_bias="0.206" />
 
     <Button
         android:id="@+id/button"
@@ -32,20 +32,19 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="316dp"
-        android:layout_height="72dp"
+        android:layout_width="374dp"
+        android:layout_height="130dp"
         android:text="Ingredient : "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.152" />
 
     <TextView
         android:id="@+id/instructionsCocktail"
-        android:layout_width="318dp"
-        android:layout_height="146dp"
+        android:layout_width="377dp"
+        android:layout_height="186dp"
         android:text="Instruction : "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
