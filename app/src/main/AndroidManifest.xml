@@ -26,8 +26,8 @@
             android:label="Meals" />
         <activity
             android:name=".CocktailActivity"
-            android:label="Cocktails" >
-        </activity>
+            android:label="Cocktails" />
+        <activity android:name=".ListActivity"></activity>
     </application>
 
 </manifest>
