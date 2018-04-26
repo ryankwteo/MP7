@@ -1,9 +1,5 @@
 package edu.illinois.cs.cs125.mp7;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,12 +13,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class CocktailActivity extends AppCompatActivity {
 
@@ -102,22 +92,37 @@ public class CocktailActivity extends AppCompatActivity {
 
     public void makeIntentCall() {
         Intent intent = getIntent();
-        String json = intent.getStringExtra(SearchActivity.jsonToParse);
+        Bundle jsonDetails = intent.getExtras();
+        String json = jsonDetails.getString(SearchActivity.jsonToParse);
+        int typeOfSearch = jsonDetails.getInt(SearchActivity.typeOfSearch, 0);
+        Log.d(TAG, Integer.toString(typeOfSearch));
+        Log.d(TAG, json);
         if (json != null) {
-            String instructions = getInstructions(json);
-            String ingredients = getIngredients(json);
-            String imageURL = getPicture(json);
-            String name = getName(json);
-            Log.d(TAG, imageURL);
-            final TextView textView = findViewById(R.id.instructionsCocktail);
-            textView.setText("Instructions :\n" + instructions);
-            final TextView textView1 = findViewById(R.id.textView3);
-            textView1.setText("Ingredients :\n" + ingredients);
-            final ImageView imageView = findViewById(R.id.imageView3);
-            Picasso.with(this).load(imageURL).into(imageView);
-            final TextView cocktailName = findViewById(R.id.cocktailName);
-            cocktailName.setText(name);
-            cocktailName.setVisibility(View.VISIBLE);
+            Log.d(TAG, "json is not null");
+            if (typeOfSearch == 1 || typeOfSearch == 3) {
+                String instructions = getInstructions(json);
+                String ingredients = getIngredients(json);
+                String imageURL = getPicture(json);
+                String name = getName(json);
+                Log.d(TAG, "got the details");
+                final TextView textView = findViewById(R.id.instructionsCocktail);
+                textView.setText("Instructions :\n" + instructions);
+                final TextView textView1 = findViewById(R.id.textView3);
+                textView1.setText("Ingredients :\n" + ingredients);
+                final ImageView imageView = findViewById(R.id.imageView3);
+                Picasso.with(this).load(imageURL).into(imageView);
+                final TextView cocktailName = findViewById(R.id.cocktailName);
+                cocktailName.setText(name);
+                cocktailName.setVisibility(View.VISIBLE);
+            } else if (typeOfSearch == 4) {
+                String imageURL = getPicture(json);
+                String name = getName(json);
+                final ImageView imageView = findViewById(R.id.imageView3);
+                Picasso.with(this).load(imageURL).into(imageView);
+                final TextView cocktailName = findViewById(R.id.cocktailName);
+                cocktailName.setText(name);
+                cocktailName.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

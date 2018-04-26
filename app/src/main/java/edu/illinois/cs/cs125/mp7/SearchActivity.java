@@ -69,13 +69,14 @@ public class SearchActivity extends AppCompatActivity{
             @Override
             public void onClick(final View view) {
                 searchType = 4;
-                search(searchType);
+                list(searchType);
             }
         });
 
     }
 
     static int searchType;
+    static String typeOfSearch;
     static String json;
     static String jsonToParse;
     String nameToSearch;
@@ -102,11 +103,34 @@ public class SearchActivity extends AppCompatActivity{
                 dialog.cancel();
             }
         });
-
-        // Display the dialog
         builder.show();
     }
 
+    public void list(final int searchType) {
+        String[] alcoholPresence = {"Yes", "No", "Maybe"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
+        builder.setTitle("Do you want alcohol?");
+        builder.setItems(alcoholPresence, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: {
+                        APICall("Alcoholic", searchType);
+                        break;
+                    }
+                    case 1: {
+                        APICall("Non alcoholic", searchType);
+                        break;
+                    }
+                    case 2: {
+                        APICall("Optional alcohol", searchType);
+                        break;
+                    }
+                }
+            }
+        });
+        builder.show();
+    }
 
     public void APICall(final String search, final int searchType) {
 
@@ -142,7 +166,10 @@ public class SearchActivity extends AppCompatActivity{
                             json = response.toString();
                             Intent toCocktailActivity = new Intent(SearchActivity.this,
                                     CocktailActivity.class);
-                            toCocktailActivity.putExtra(jsonToParse, json);
+                            Bundle jsonDetails = new Bundle();
+                            jsonDetails.putString(jsonToParse, json);
+                            jsonDetails.putInt(typeOfSearch, searchType);
+                            toCocktailActivity.putExtras(jsonDetails);
                             startActivity(toCocktailActivity);
                         }
                     }, new Response.ErrorListener() {
@@ -156,4 +183,5 @@ public class SearchActivity extends AppCompatActivity{
             e.printStackTrace();
         }
     }
+    
 }

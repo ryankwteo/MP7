@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openCocktails(View view) {
-        Intent intent = new Intent(this, CocktailActivity.class);
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 }
