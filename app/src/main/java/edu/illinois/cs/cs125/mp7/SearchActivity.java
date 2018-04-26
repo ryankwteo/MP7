@@ -55,7 +55,7 @@ public class SearchActivity extends AppCompatActivity{
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, final int unused) {
-                nameToSearch = input.getText().toString().trim().toLowerCase();
+                nameToSearch = input.getText().toString().toLowerCase();
                 APICall(nameToSearch);
             }
         });
