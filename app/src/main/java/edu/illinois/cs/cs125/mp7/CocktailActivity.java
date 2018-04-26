@@ -118,7 +118,7 @@ public class CocktailActivity extends AppCompatActivity {
                 final TextView cocktailName = findViewById(R.id.cocktailName);
                 cocktailName.setText(name);
                 cocktailName.setVisibility(View.VISIBLE);
-            } else if (typeOfSearch == 4) {
+            } else if (typeOfSearch == 2 || typeOfSearch == 4) {
                 String imageURL = getPicture(json);
                 String name = getName(json);
                 final ImageView imageView = findViewById(R.id.imageView3);
