@@ -9,37 +9,36 @@
         android:id="@+id/nameSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="searchName"
         android:text="Name"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button5"
-        app:layout_constraintEnd_toEndOf="@+id/button4"
-        app:layout_constraintStart_toStartOf="@+id/button4" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/ingredientSearch"
+        app:layout_constraintEnd_toEndOf="@+id/randomSearch"
+        app:layout_constraintStart_toStartOf="@+id/randomSearch" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/cocktailType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Non-alcoholic"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button4"
+        app:layout_constraintBaseline_toBaselineOf="@+id/randomSearch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button4" />
+        app:layout_constraintStart_toEndOf="@+id/randomSearch" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/randomSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:text="Random"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/cocktailType"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/ingredientSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="46dp"

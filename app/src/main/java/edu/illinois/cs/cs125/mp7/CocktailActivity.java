@@ -39,14 +39,27 @@ public class CocktailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public static String getName(final String json) {
+        if (json == null) {
+            return null;
+        } else {
+            JsonParser parser = new JsonParser();
+            JsonObject drinks = parser.parse(json).getAsJsonObject();
+            JsonArray arrayOfDrinks = drinks.get("drinks").getAsJsonArray();
+            JsonObject drink = arrayOfDrinks.get(0).getAsJsonObject();
+
+            return drink.get("strDrink").getAsString();
+        }
+    }
+
     public static String getInstructions(final String json) {
         if (json == null) {
             return null;
         } else {
             JsonParser parser = new JsonParser();
             JsonObject drinks = parser.parse(json).getAsJsonObject();
-            JsonArray typeOfDrinks = drinks.get("drinks").getAsJsonArray();
-            JsonObject drink = typeOfDrinks.get(0).getAsJsonObject();
+            JsonArray arrayOfDrinks = drinks.get("drinks").getAsJsonArray();
+            JsonObject drink = arrayOfDrinks.get(0).getAsJsonObject();
 
             return drink.get("strInstructions").getAsString();
         }
@@ -59,8 +72,8 @@ public class CocktailActivity extends AppCompatActivity {
       } else {
         JsonParser parser = new JsonParser();
         JsonObject drinks = parser.parse(json).getAsJsonObject();
-        JsonArray typeOfDrinks = drinks.get("drinks").getAsJsonArray();
-        JsonObject drink = typeOfDrinks.get(0).getAsJsonObject();
+        JsonArray arrayOfDrinks = drinks.get("drinks").getAsJsonArray();
+        JsonObject drink = arrayOfDrinks.get(0).getAsJsonObject();
         for (int i = 1; i < 16; i++) {
           if (drink.get("strIngredient" + i).getAsString().equals("")) {
             Ingredient = Ingredient + "";
@@ -79,8 +92,8 @@ public class CocktailActivity extends AppCompatActivity {
         } else {
             JsonParser parser = new JsonParser();
             JsonObject drinks = parser.parse(json).getAsJsonObject();
-            JsonArray typeOfDrinks = drinks.get("drinks").getAsJsonArray();
-            JsonObject drink = typeOfDrinks.get(0).getAsJsonObject();
+            JsonArray arrayOfDrinks = drinks.get("drinks").getAsJsonArray();
+            JsonObject drink = arrayOfDrinks.get(0).getAsJsonObject();
             return drink.get("strDrinkThumb").getAsString();
         }
     }
@@ -94,6 +107,7 @@ public class CocktailActivity extends AppCompatActivity {
             String instructions = getInstructions(json);
             String ingredients = getIngredients(json);
             String imageURL = getPicture(json);
+            String name = getName(json);
             Log.d(TAG, imageURL);
             final TextView textView = findViewById(R.id.instructionsCocktail);
             textView.setText("Instructions :\n" + instructions);
@@ -101,6 +115,9 @@ public class CocktailActivity extends AppCompatActivity {
             textView1.setText("Ingredients :\n" + ingredients);
             final ImageView imageView = findViewById(R.id.imageView3);
             Picasso.with(this).load(imageURL).into(imageView);
+            final TextView cocktailName = findViewById(R.id.cocktailName);
+            cocktailName.setText(name);
+            cocktailName.setVisibility(View.VISIBLE);
         }
     }
 }

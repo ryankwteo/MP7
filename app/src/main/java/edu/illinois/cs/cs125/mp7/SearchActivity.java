@@ -37,26 +37,63 @@ public class SearchActivity extends AppCompatActivity{
 
         requestQueue = Volley.newRequestQueue(this);
 
+        final Button nameSearch = findViewById(R.id.nameSearch);
+        nameSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                searchType = 1;
+                search(searchType);
+            }
+        });
+
+        final Button ingredientSearch = findViewById(R.id.ingredientSearch);
+        ingredientSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                searchType = 2;
+                search(searchType);
+            }
+        });
+
+        final Button randomSearch = findViewById(R.id.randomSearch);
+        randomSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                searchType = 3;
+                APICall("", searchType);
+            }
+        });
+
+        final Button cocktailType = findViewById(R.id.cocktailType);
+        cocktailType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                searchType = 4;
+                search(searchType);
+            }
+        });
+
     }
 
+    static int searchType;
     static String json;
     static String jsonToParse;
     String nameToSearch;
     String TAG = "MP777";
     private static RequestQueue requestQueue;
 
-    public void searchName(View view) {
+    public void search(final int searchType) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
-        builder.setTitle("Cocktail Name Search");
+        builder.setTitle("Choose your poison");
         final EditText input = new EditText(SearchActivity.this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, final int unused) {
                 nameToSearch = input.getText().toString().toLowerCase();
-                APICall(nameToSearch);
+                APICall(nameToSearch, searchType);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -71,11 +108,33 @@ public class SearchActivity extends AppCompatActivity{
     }
 
 
-    public void APICall(final String search) {
+    public void APICall(final String search, final int searchType) {
+
+        String searchParameter = null;
+
+        switch (searchType) {
+            case 1: {
+                searchParameter = "search.php?s=";
+                break;
+            }
+            case 2: {
+                searchParameter = "filter.php?i=";
+                break;
+            }
+            case 3: {
+                searchParameter = "random.php";
+                break;
+            }
+            case 4: {
+                searchParameter = "filter.php?a=";
+                break;
+            }
+        }
+
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + search,
+                    "https://www.thecocktaildb.com/api/json/v1/1/" + searchParameter + search,
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
