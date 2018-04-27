@@ -21,7 +21,14 @@ public class CocktailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cocktail);
 
-        makeIntentCall();
+        Intent intent = getIntent();
+        String[] searchData;
+        String json;
+        int typeOfSearch;
+        searchData = intent.getStringArrayExtra(ListActivity.jsonToParseFromID);
+        json = searchData[0];
+        typeOfSearch = Integer.parseInt(searchData[1]);
+        makeIntentCall(json, typeOfSearch);
     }
 
     public void openSearch(View view) {
@@ -90,20 +97,10 @@ public class CocktailActivity extends AppCompatActivity {
 
     String TAG = "MP777";
 
-    public void makeIntentCall() {
-        String[] searchData;
-        String json;
-        int typeOfSearch;
-        Intent intent = getIntent();
-        searchData = intent.getStringArrayExtra(SearchActivity.jsonToParse);
-        json = searchData[0];
-        typeOfSearch = Integer.parseInt(searchData[1]);
-        Log.d(TAG, searchData[1]);
-        Log.d(TAG, Integer.toString(typeOfSearch));
-        Log.d(TAG,json);
+    public void makeIntentCall(final String json, final int typeOfSearch) {
         if (json != null) {
             Log.d(TAG, "json is not null");
-            if (typeOfSearch == 1 || typeOfSearch == 3) {
+            if (typeOfSearch == 3 || typeOfSearch == 5) {
                 String instructions = getInstructions(json);
                 String ingredients = getIngredients(json);
                 String imageURL = getPicture(json);
@@ -113,14 +110,6 @@ public class CocktailActivity extends AppCompatActivity {
                 textView.setText("Instructions :\n" + instructions);
                 final TextView textView1 = findViewById(R.id.textView3);
                 textView1.setText("Ingredients :\n" + ingredients);
-                final ImageView imageView = findViewById(R.id.imageView3);
-                Picasso.with(this).load(imageURL).into(imageView);
-                final TextView cocktailName = findViewById(R.id.cocktailName);
-                cocktailName.setText(name);
-                cocktailName.setVisibility(View.VISIBLE);
-            } else if (typeOfSearch == 2 || typeOfSearch == 4) {
-                String imageURL = getPicture(json);
-                String name = getName(json);
                 final ImageView imageView = findViewById(R.id.imageView3);
                 Picasso.with(this).load(imageURL).into(imageView);
                 final TextView cocktailName = findViewById(R.id.cocktailName);

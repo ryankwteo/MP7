@@ -26,6 +26,7 @@ import com.google.gson.JsonParser;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity{
@@ -76,11 +77,11 @@ public class SearchActivity extends AppCompatActivity{
     }
 
     static int searchType;
-    static String typeOfSearch;
     static String json;
     static String jsonToParse;
+    static String jsonToParseToList;
     String nameToSearch;
-    String TAG = "MP777";
+    static String TAG = "MP777";
     private static RequestQueue requestQueue;
 
     public void search(final int searchType) {
@@ -153,6 +154,10 @@ public class SearchActivity extends AppCompatActivity{
                 searchParameter = "filter.php?a=";
                 break;
             }
+            default: {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
+                builder.setMessage("Invalid search type");
+            }
         }
 
         try {
@@ -164,11 +169,10 @@ public class SearchActivity extends AppCompatActivity{
                         @Override
                         public void onResponse(final JSONObject response) {
                             json = response.toString();
-                            Intent toCocktailActivity = new Intent(SearchActivity.this,
-                                    CocktailActivity.class);
-                            toCocktailActivity.putExtra(jsonToParse, new String[] {json,
+                            Intent toListActivity = new Intent(SearchActivity.this, ListActivity.class);
+                            toListActivity.putExtra(jsonToParseToList, new String[]{json,
                                     Integer.toString(searchType)});
-                            startActivity(toCocktailActivity);
+                            startActivity(toListActivity);
                         }
                     }, new Response.ErrorListener() {
                 @Override
