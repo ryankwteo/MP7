@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class SearchActivity extends AppCompatActivity{
 
         requestQueue = Volley.newRequestQueue(this);
 
-        final Button nameSearch = findViewById(R.id.nameSearch);
+        final ImageView nameSearch = findViewById(R.id.nameSearch);
         nameSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -47,7 +48,7 @@ public class SearchActivity extends AppCompatActivity{
             }
         });
 
-        final Button ingredientSearch = findViewById(R.id.ingredientSearch);
+        final ImageView ingredientSearch = findViewById(R.id.ingredientSearch);
         ingredientSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -56,7 +57,7 @@ public class SearchActivity extends AppCompatActivity{
             }
         });
 
-        final Button randomSearch = findViewById(R.id.randomSearch);
+        final ImageView randomSearch = findViewById(R.id.randomSearch);
         randomSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -65,7 +66,7 @@ public class SearchActivity extends AppCompatActivity{
             }
         });
 
-        final Button cocktailType = findViewById(R.id.cocktailType);
+        final ImageView cocktailType = findViewById(R.id.cocktailType);
         cocktailType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
