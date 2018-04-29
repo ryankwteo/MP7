@@ -1,14 +1,19 @@
 package edu.illinois.cs.cs125.mp7;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -59,7 +64,15 @@ public class ListActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.list);
         String[] nameData = getNames(json, numberOfDrinks);
-        arr = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nameData);
+        arr = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, nameData) {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView item = (TextView) super.getView(position, convertView, parent);
+                item.setTextColor(Color.parseColor("#E0F2F1"));
+                return item;
+            }
+        };
         listView.setAdapter(arr);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
